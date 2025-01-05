@@ -32,7 +32,7 @@ def gmail_authenticate(scopes, auth_json = "auth.json", auth_pickle = "auth.pick
 
 def build_message(destination, from_email, obj, body, attachments=[]):
     if not attachments: # no attachments given
-        message = MIMEText(body)
+        message = MIMEText(body, "html")
         message['to'] = destination
         message['from'] = from_email
         message['subject'] = obj
