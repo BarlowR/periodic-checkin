@@ -40,6 +40,7 @@ if __name__ == "__main__":
     parser.add_argument("--sender_email", required=True)
     parser.add_argument("--template_folder", default="templates")
     parser.add_argument("--periodic", default="weekly")
+    parser.add_argument("--auth", default="auth.json")
     args = parser.parse_args()
 
     checkin_type = None
@@ -71,6 +72,6 @@ if __name__ == "__main__":
                  subject_line,
                  checkin_message,
                  args.to_email, 
-                 "auth.json")
+                 args.auth)
 
 
