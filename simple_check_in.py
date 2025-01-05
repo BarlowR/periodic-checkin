@@ -4,7 +4,7 @@ from datetime import datetime, timezone, timedelta
 from enum import Enum
 import markdown
 import os
-from gmail_tools import gmail_authenticate, send_message
+from smtp_tools import send_smtp_email
 from text_processor import process_text
 
 
@@ -36,16 +36,13 @@ def format_datetime(current_time):
 parser = argparse.ArgumentParser()
 
 if __name__ == "__main__":
-    service = gmail_authenticate(REQUIRED_SCOPES)
     parser.add_argument("--to_email", required=True)
     parser.add_argument("--sender_email", required=True)
-
     parser.add_argument("--template_folder", default="templates")
     parser.add_argument("--periodic", default="weekly")
     args = parser.parse_args()
 
     checkin_type = None
-    print(args.periodic)
     if (args.periodic == "daily"):
         checkin_type = Templates.DAILY
     elif (args.periodic == "weekly"):
@@ -70,10 +67,10 @@ if __name__ == "__main__":
 
     subject_line = f"{args.periodic.capitalize()} Check-In {format_datetime(datetime.now())}"
     
-    send_message(service, 
-                 args.to_email, 
-                 args.sender_email,
+    send_smtp_email( 
                  subject_line,
-                 checkin_message)
+                 checkin_message,
+                 args.to_email, 
+                 "auth.json")
 
 
