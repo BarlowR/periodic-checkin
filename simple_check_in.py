@@ -41,6 +41,7 @@ if __name__ == "__main__":
     parser.add_argument("--template_folder", default="templates")
     parser.add_argument("--periodic", default="weekly")
     parser.add_argument("--auth", default="auth.json")
+    parser.add_argument("--subject_prefix", default="")
     args = parser.parse_args()
 
     checkin_type = None
@@ -66,7 +67,7 @@ if __name__ == "__main__":
 
     checkin_message = parse_template(checkin_template_text)
 
-    subject_line = f"{args.periodic.capitalize()} Check-In {format_datetime(datetime.now())}"
+    subject_line = f"{args.subject_prefix}{args.periodic.capitalize()} Check-In {format_datetime(datetime.now())}"
     
     send_smtp_email( 
                  subject_line,
